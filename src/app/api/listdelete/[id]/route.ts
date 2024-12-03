@@ -1,18 +1,11 @@
 import { connect } from '@/app/db/configdb';
 import School from '@/app/models/school';
-import { NextRequest, NextResponse } from 'next/server';
-
-// Define RouteParams interface
-interface RouteParams {
-    params: {
-        id: string;
-    };
-}
+import { NextResponse } from 'next/server';
 
 // DELETE Method
-export async function DELETE(req: NextRequest, { params }: RouteParams) {
+export async function DELETE(req: Request, { params }: { params: { id: string } }) {
     try {
-        const { id } = params; // No need to await params
+        const { id } = params;
 
         // Validate the ID
         if (!id) {

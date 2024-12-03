@@ -3,34 +3,42 @@ import School from '@/app/models/school';
 import { NextResponse } from 'next/server';
 import mongoose from 'mongoose';
 
-// DELETE Method
-export async function DELETE(req: Request, { params }: { params: { id: string } }): Promise<NextResponse> {
+// PUT Method
+export async function PUT(req: Request, { params }: { params: { id: string } }) {
     try {
-        const { id } = params;
+        // Get the id from params
+        const { id } = await params;
+
 
         // Check if id is valid ObjectId
         if (!mongoose.Types.ObjectId.isValid(id)) {
             return NextResponse.json({ error: 'Invalid School ID' }, { status: 400 });
         }
 
+        if (!id) {
+            return NextResponse.json({ error: 'School ID is required' }, { status: 400 });
+        }
+
+        const body = await req.json(); // Extract request body for update
+
         // Connect to MongoDB
         await connect();
 
-        // Find and delete the school by its ID
-        const deletedSchool = await School.findByIdAndDelete(id);
+        // Find and update the school by its ID
+        const updatedSchool = await School.findByIdAndUpdate(id, body, { new: true });
 
-        if (!deletedSchool) {
+        if (!updatedSchool) {
             return NextResponse.json({ error: 'School not found' }, { status: 404 });
         }
 
         return NextResponse.json(
-            { message: 'School deleted successfully' },
+            { message: 'School updated successfully', school: updatedSchool },
             { status: 200 }
         );
     } catch (error: any) {
-        console.error('Error deleting school:', error); // Log error
+        console.error('Error updating school:', error); // Log error
         return NextResponse.json(
-            { error: 'Error deleting school', details: error.message },
+            { error: 'Error updating school', details: error.message },
             { status: 500 }
         );
     }
