@@ -1,9 +1,9 @@
 import { connect } from '@/app/db/configdb';
 import School from '@/app/models/school';
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 
 // DELETE Method
-export async function DELETE(req: Request, { params }: { params: { id: string } }) {
+export async function DELETE(req: NextRequest, { params }: { params: { id: string } }) {
     try {
         const { id } = params;
 
@@ -34,7 +34,7 @@ export async function DELETE(req: Request, { params }: { params: { id: string } 
             { status: 200 }
         );
     } catch (error: any) {
-        console.error('Error deleting school:', error); // Log the error
+        console.error('Error deleting school:', error);
 
         // Respond with error
         return NextResponse.json(
