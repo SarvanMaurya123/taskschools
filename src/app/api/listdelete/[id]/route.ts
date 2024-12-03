@@ -1,11 +1,11 @@
 import { connect } from '@/app/db/configdb';
 import School from '@/app/models/school';
-import { NextRequest, NextResponse } from 'next/server';
+import { NextResponse } from 'next/server';
 
-
-export async function DELETE(req: NextRequest, { params }: { params: { id: string } }) {
+// DELETE Method: Delete a school by its ID
+export async function DELETE(req: Request, context: { params: { id: string } }) {
     try {
-        const { id } = params;
+        const { id } = context.params; // Access 'id' from context.params
 
         if (!id) {
             return NextResponse.json(
@@ -14,8 +14,10 @@ export async function DELETE(req: NextRequest, { params }: { params: { id: strin
             );
         }
 
-
+        // Connect to MongoDB
         await connect();
+
+        // Delete the school by its ID
         const deletedSchool = await School.findByIdAndDelete(id);
 
         if (!deletedSchool) {
@@ -30,7 +32,7 @@ export async function DELETE(req: NextRequest, { params }: { params: { id: strin
             { status: 200 }
         );
     } catch (error: any) {
-        console.error("Error deleting school:", error);
+        console.error("Error deleting school:", error); // Log error
         return NextResponse.json(
             { error: 'Error deleting school', details: error.message },
             { status: 500 }
@@ -39,9 +41,9 @@ export async function DELETE(req: NextRequest, { params }: { params: { id: strin
 }
 
 // PUT Method: Update a school by its ID
-export async function PUT(req: NextRequest, { params }: { params: { id: string } }) {
+export async function PUT(req: Request, context: { params: { id: string } }) {
     try {
-        const { id } = params;
+        const { id } = context.params; // Access 'id' from context.params
 
         if (!id) {
             return NextResponse.json({ error: 'School ID is required' }, { status: 400 });
