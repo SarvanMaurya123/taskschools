@@ -1,14 +1,19 @@
-
 import { connect } from '@/app/db/configdb';
 import School from '@/app/models/school';
 import { NextResponse } from 'next/server';
-
+import mongoose from 'mongoose';
 
 // PUT Method
 export async function PUT(req: Request, { params }: { params: { id: string } }) {
     try {
+        // Get the id from params
+        const { id } = await params;
+        console.log("ID:", id);
 
-        const { id } = await params;  // Await params before accessing 'id'
+        // Check if id is valid ObjectId
+        if (!mongoose.Types.ObjectId.isValid(id)) {
+            return NextResponse.json({ error: 'Invalid School ID' }, { status: 400 });
+        }
 
         if (!id) {
             return NextResponse.json({ error: 'School ID is required' }, { status: 400 });
