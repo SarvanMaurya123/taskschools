@@ -67,7 +67,7 @@ const ListSchools = () => {
         try {
             const { id, name, address, latitude, longitude } = editSchool;
 
-            await axios.put(`/api/listdelete/${id}`, {
+            await axios.put(`/api/listupdate/${id}`, {
                 name,
                 address,
                 latitude,
