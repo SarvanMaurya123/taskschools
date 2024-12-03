@@ -2,12 +2,10 @@ import { connect } from '@/app/db/configdb';
 import School from '@/app/models/school';
 import { NextRequest, NextResponse } from 'next/server';
 
-// DELETE Method
 export async function DELETE(req: NextRequest, { params }: { params: { id: string } }) {
     try {
         const { id } = params;
 
-        // Validate the ID
         if (!id) {
             return NextResponse.json(
                 { error: 'School ID is required' },
