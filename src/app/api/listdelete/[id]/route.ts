@@ -4,11 +4,14 @@ import { NextResponse } from 'next/server';
 import mongoose from 'mongoose';
 
 // DELETE Method
-export async function DELETE(req: Request, { params }: { params: { id: string } }): Promise<NextResponse> {
-    try {
-        const { id } = params;
+export async function DELETE(
+    req: Request,
+    context: { params: { id: string } } // Correct type for the second argument
+) {
+    const { id } = context.params; // Correctly access `id` from `params`
 
-        // Check if id is valid ObjectId
+    try {
+        // Validate the ObjectId
         if (!mongoose.Types.ObjectId.isValid(id)) {
             return NextResponse.json({ error: 'Invalid School ID' }, { status: 400 });
         }
