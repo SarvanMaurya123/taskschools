@@ -2,10 +2,11 @@ import { connect } from '@/app/db/configdb';
 import School from '@/app/models/school';
 import { NextResponse } from 'next/server';
 
-// DELETE Method: Delete a school by its ID
-export async function DELETE(req: Request, context: { params: { id: string } }) {
+// DELETE Method
+export async function DELETE(req: Request, { params }: { params: { id: string } }) {
     try {
-        const { id } = await context.params;  // Await params before accessing 'id'
+        // Ensure params are properly handled (async)
+        const { id } = await params;  // Await params if necessary
 
         if (!id) {
             return NextResponse.json(
@@ -32,7 +33,7 @@ export async function DELETE(req: Request, context: { params: { id: string } }) 
             { status: 200 }
         );
     } catch (error: any) {
-        console.error("Error deleting school:", error); // Log error
+        console.error('Error deleting school:', error); // Log error
         return NextResponse.json(
             { error: 'Error deleting school', details: error.message },
             { status: 500 }
@@ -40,10 +41,11 @@ export async function DELETE(req: Request, context: { params: { id: string } }) 
     }
 }
 
-// PUT Method: Update a school by its ID
-export async function PUT(req: Request, context: { params: { id: string } }) {
+// PUT Method
+export async function PUT(req: Request, { params }: { params: { id: string } }) {
     try {
-        const { id } = await context.params;  // Await params before accessing 'id'
+        // Await params if necessary
+        const { id } = await params;  // Await params before accessing 'id'
 
         if (!id) {
             return NextResponse.json({ error: 'School ID is required' }, { status: 400 });
@@ -66,7 +68,7 @@ export async function PUT(req: Request, context: { params: { id: string } }) {
             { status: 200 }
         );
     } catch (error: any) {
-        console.error("Error updating school:", error); // Log error
+        console.error('Error updating school:', error); // Log error
         return NextResponse.json(
             { error: 'Error updating school', details: error.message },
             { status: 500 }
