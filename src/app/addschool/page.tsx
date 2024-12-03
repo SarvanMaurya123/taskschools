@@ -40,7 +40,7 @@ const AddSchool = () => {
             return 'Latitude must be a valid number between -1000 and 1000';
         }
 
-        if (!longitude.trim() || isNaN(Number(longitude)) || Number(longitude) < -180 || Number(longitude) > 180) {
+        if (!longitude.trim() || isNaN(Number(longitude)) || Number(longitude) < -1000 || Number(longitude) > 1000) {
             return 'Longitude must be a valid number between -180 and 180';
         }
 

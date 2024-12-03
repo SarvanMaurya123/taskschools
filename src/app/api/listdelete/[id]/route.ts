@@ -5,7 +5,7 @@ import { NextResponse } from 'next/server';
 // DELETE Method: Delete a school by its ID
 export async function DELETE(req: Request, context: { params: { id: string } }) {
     try {
-        const { id } = context.params; // Access 'id' from context.params
+        const { id } = await context.params;  // Await params before accessing 'id'
 
         if (!id) {
             return NextResponse.json(
@@ -43,7 +43,7 @@ export async function DELETE(req: Request, context: { params: { id: string } }) 
 // PUT Method: Update a school by its ID
 export async function PUT(req: Request, context: { params: { id: string } }) {
     try {
-        const { id } = context.params; // Access 'id' from context.params
+        const { id } = await context.params;  // Await params before accessing 'id'
 
         if (!id) {
             return NextResponse.json({ error: 'School ID is required' }, { status: 400 });
