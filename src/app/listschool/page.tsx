@@ -65,9 +65,9 @@ const ListSchools = () => {
     const updateSchool = async () => {
 
         try {
-            const { _id, name, address, latitude, longitude } = editSchool;
+            const { id, name, address, latitude, longitude } = editSchool;
 
-            await axios.put(`/api/listdelete/${_id}`, {
+            await axios.put(`/api/listdelete/${id}`, {
                 name,
                 address,
                 latitude,
@@ -77,7 +77,7 @@ const ListSchools = () => {
             // Update state with new school details
             setSchools((prev) =>
                 prev.map((school) =>
-                    school._id === _id ? { ...school, name, address, latitude, longitude } : school
+                    school._id === id ? { ...school, name, address, latitude, longitude } : school
                 )
             );
 

@@ -44,7 +44,7 @@ export async function DELETE(req: Request, { params }: { params: { id: string } 
 // PUT Method
 export async function PUT(req: Request, { params }: { params: { id: string } }) {
     try {
-        // Await params if necessary
+
         const { id } = await params;  // Await params before accessing 'id'
 
         if (!id) {
